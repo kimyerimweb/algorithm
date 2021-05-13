@@ -32,8 +32,8 @@ function quickSort(arr,startindex,endIndex){
         }
     }
     
-    quickSort(arr,startindex,j-1)
-    quickSort(arr,j+1,endIndex)
+    quickSort(arr,startindex,j-1) //여기선 startindex가 안바뀌지만 연산할 필요가 없으면 어차피 j-1이 startindex보다 작아서 실행안되고
+    quickSort(arr,j+1,endIndex) //여기서 j-1값을 그대로 가지고 있으면서 startindex대신에 j+1가 들어간다
 }
 
 quickSort(arr,0,9)
