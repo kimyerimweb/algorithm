@@ -7,26 +7,27 @@ const DFS = (num) => {
       DFS(i);
     }
   }
+
   return;
 };
 
 const BFS = (num) => {
   let queue = [];
   queue.push(num);
-  bfsResult.push(num);
+  visitedBfs[num] = true;
 
   while (queue.length !== 0) {
     let shiftQueue = queue.shift();
-    visitedBfs[shiftQueue] = true;
+    bfsResult.push(shiftQueue);
 
     for (let i = 1; i < graph.length; i++) {
-      if (graph[shiftQueue][i] === 1 && visitedBfs[i] === false) {
-        visitedBfs[i] = true;
+      if (graph[shiftQueue][i] && visitedBfs[i] === false) {
         queue.push(i);
-        bfsResult.push(i);
+        visitedBfs[i] = true;
       }
     }
   }
+
   return;
 };
 
@@ -36,27 +37,27 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-let input = [];
+const input = [];
+const visitedBfs = [];
+const visitedDfs = [];
+const dfsResult = [];
+const bfsResult = [];
 let graph = [];
-let visitedDfs = [];
-let visitedBfs = [];
-let dfsResult = [];
-let bfsResult = [];
 
 rl.on("line", function (line) {
   input.push(line.toString());
 }).on("close", function () {
-  let [node, edge, num] = input
+  const [node, edge, num] = input
     .shift()
     .split(" ")
-    .map((el) => parseInt(el));
+    .map((el) => Number(el));
 
-  graph = Array.from(Array(node + 1), () => Array(node + 1).fill(0));
+  graph = Array.from(Array(node + 1), () => Array(node + 1).fill(false));
 
   for (let i of input) {
-    let [x, y] = i.split(" ").map((el) => parseInt(el));
-    graph[x][y] = 1;
-    graph[y][x] = 1;
+    const [x, y] = i.split(" ").map((el) => Number(el));
+    graph[x][y] = true;
+    graph[y][x] = true;
   }
 
   visitedDfs = new Array(node + 1).fill(false);
